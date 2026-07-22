@@ -82,7 +82,7 @@ function StatCard({
       variants={itemVariants}
       className="stat-card"
       style={{ ["--accent" as any]: accent }}
-      animate={changed ? { scale: [1, 1.03, 1] } : undefined}
+      animate={changed ? { opacity: 1, y: 0, scale: [1, 1.03, 1] } : undefined}
       transition={{ duration: 0.35 }}
     >
       <div className="stat-card-top">
