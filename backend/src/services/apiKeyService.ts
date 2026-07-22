@@ -18,9 +18,21 @@ const memoryKeys = new Map<string, ApiKeyRecord>([
 export async function getApiKey(key: string): Promise<ApiKeyRecord | null> {
   if (isMongoConnected()) {
     const doc = await ApiKeyModel.findOne({ key }).lean();
-    if (!doc) return null;
-    return { key: doc.key, clientId: doc.clientId, tier: doc.tier };
+
+    // If the key exists in MongoDB, use it.
+    if (doc) {
+      return {
+        key: doc.key,
+        clientId: doc.clientId,
+        tier: doc.tier,
+      };
+    }
+
+    // Otherwise, fall back to the built-in demo keys.
+    return memoryKeys.get(key) || null;
   }
+
+  // No MongoDB connection → use in-memory keys.
   return memoryKeys.get(key) || null;
 }
 
