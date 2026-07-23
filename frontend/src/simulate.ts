@@ -13,7 +13,7 @@ function ping(apiKey: string, endpoint: "ping" | "heavy" = "ping") {
  * past its bucket capacity (10) so you visibly see allowed → blocked flip
  * in the dashboard within a couple seconds.
  */
-export async function runBurst(count = 25) {
+export async function runBurst(count = 60) {
   const requests = Array.from({ length: count }, () => ping("demo-free-key"));
   await Promise.all(requests);
 }
